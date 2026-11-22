@@ -101,7 +101,7 @@ These are hypotheses to test with people, not validated guidelines.
 1. Bourtoule, L., Chandrasekaran, V., Choquette-Choo, C. A., Jia, H., Travers, A., Zhang, B., Lie, D. & Papernot, N. (2021). Machine Unlearning. *IEEE Symposium on Security and Privacy*.
 2. Chen, M., Zhang, Z., Wang, T., Backes, M., Humbert, M. & Zhang, Y. (2021). When Machine Unlearning Jeopardizes Privacy. *ACM Conference on Computer and Communications Security (CCS)*.
 
-## Sources (accessed 22 November 2026)
+## Sources
 
 - OpenAI Help Center, [Deleting and archiving chats in ChatGPT](https://help.openai.com/en/articles/8809935-deleting-and-archiving-chats-in-chatgpt)
 - OpenAI Help Center, [Data controls FAQ](https://help.openai.com/en/articles/7730893-data-controls-faq)
