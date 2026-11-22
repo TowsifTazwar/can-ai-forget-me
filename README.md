@@ -2,7 +2,7 @@
 ### What "delete" means in consumer AI assistants and what people would need to trust it
 
 **Md. Towsif Tazwar Hussain** · Department of CSE, United International University, Dhaka
-Independent research brief · November 2026
+Independent research brief
 
 > **Type of work:** desk review of official documentation plus design requirements. No users were studied and no app was tested. Findings describe what providers *say* in their help pages, not measured system behaviour. A user study is proposed as the next step (Section 7).
 
