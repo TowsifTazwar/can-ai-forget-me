@@ -10,15 +10,11 @@ Independent research brief · November 2026
 
 ## 1. Why I am asking this
 
-Data protection laws give people a right to have their data erased and a model trained on that data should then behave as if it never saw them. This is called **machine unlearning**.
+Data protection laws give people a right to have their data erased. For AI this raises a harder question: a model trained on someone's data should then behave as if it never saw them. Making that happen is called **machine unlearning**.
 
-In a forthcoming empirical study I led (currently being submitted for review), I tested this on a tabular AI model that predicts hospital readmission, using a public dataset of about 100,000 hospital visits and two other public datasets. Three findings pushed me toward a human question:
+Research on machine unlearning, including my own ongoing work on tabular models, points to a gap between deleting data in principle and deleting it in practice. Exact deletion is possible, for example by retraining on the remaining data [1]. But data about a person can persist in more places than the obvious one. Prior work has also shown that comparing a model's outputs before and after a deletion can reveal who was deleted [2].
 
-1. **Exact deletion is possible.** Deleting a patient's rows gave the same predictions as rebuilding the model without them in every check we ran.
-2. **Shortcuts silently break it.** Three common engineering shortcuts (reloading a saved copy of the model's memory, preprocessing with everyone's data, keeping settings chosen before the deletion) left a trace of the deleted person, while the system still looked as if it had deleted them.
-3. **Asking to be forgotten can expose you.** Comparing a model's outputs before and after a deletion often revealed *who* had been deleted. Small output noise reduced this leak but did not remove it.
-
-Engineers can fix the shortcuts. What the experiments cannot answer is the human side: **when a person presses "delete", what do they believe happens and how could they ever know it did?** This brief is a first step toward that question.
+So even when the engineering is right, the human side stays open: **when a person presses "delete", what do they believe happens and how could they ever know it did?** This brief is a first step toward that question.
 
 ## 2. Questions
 
@@ -30,7 +26,7 @@ Engineers can fix the shortcuts. What the experiments cannot answer is the human
 
 I read the official help and privacy pages of three assistants widely used in Bangladesh: **ChatGPT** (OpenAI), **Gemini** (Google) and **Meta AI** (available inside Facebook, Messenger, Instagram and WhatsApp). Pages were accessed on 22 November 2026.
 
-I coded each provider against seven **layers of deletion**, built from the places my unlearning study found a person's data can persist:
+I coded each provider against seven **layers of deletion**, covering the places a person's data can persist in an AI service, from visible history to models already trained:
 
 | Layer | Question asked of each provider |
 |---|---|
@@ -64,19 +60,19 @@ I coded each provider against seven **layers of deletion**, built from the place
 
 **O4. Nobody talks about models already trained.** None of the pages I reviewed says what happens to a model that has *already* learned from someone's data (L6). This is exactly the layer machine unlearning research is about and it is invisible to users.
 
-**O5. There is no proof.** No provider describes a receipt, log or any way for a person to check that deletion happened (L7). My study showed that deletion *can* be checked by rebuilding a model and comparing outputs, but only an auditor with system access can do that today.
+**O5. There is no proof.** No provider describes a receipt, log or any way for a person to check that deletion happened (L7). Unlearning research shows that deletion *can* be verified technically, for example by comparing a model with one rebuilt without the person's data. Today only someone with system access could do that.
 
 ## 6. Design requirements for a trustworthy "forget me" flow
 
-These connect findings from my unlearning study (left) to what a person would need to see (right).
+These connect technical realities of deletion (left) to what a person would need to see (right).
 
-| From the technical study | Design requirement |
+| Technical reality | Design requirement |
 |---|---|
-| Data persists in several places (encoders, cached context, tuned settings) | **R1. Show the layers.** Say plainly which layers an action deletes and which it does not, in the person's own language (for Bangladesh, Bangla first). |
+| Data about a person can persist in several places beyond the visible chat | **R1. Show the layers.** Say plainly which layers an action deletes and which it does not, in the person's own language (for Bangladesh, Bangla first). |
 | Full removal takes time and has legal exceptions | **R2. Give a clear timeline.** Say when deletion will be complete and name the exceptions in plain words. |
-| Partial deletion silently fails | **R3. One "forget me" entry point** that covers chats, memory and training use together, instead of four separate settings. |
-| Exact deletion is checkable when every deletion is logged | **R4. A deletion receipt** stating what was deleted and when, which the person can keep and an auditor could verify. |
-| Deletion can reveal who asked; past training may not be undone | **R5. Be honest about limits.** Say what deletion cannot guarantee, including models already trained, rather than implying everything is gone. |
+| Partial deletion can fail without anyone noticing | **R3. One "forget me" entry point** that covers chats, memory and training use together, instead of four separate settings. |
+| Deletion can be verified when every deletion is logged | **R4. A deletion receipt** stating what was deleted and when, which the person can keep and an auditor could verify. |
+| Deletion itself can reveal who asked [2]; past training may not be undone | **R5. Be honest about limits.** Say what deletion cannot guarantee, including models already trained, rather than implying everything is gone. |
 | Exceptions are triggered by ordinary actions | **R6. Show side effects at the moment they happen**, for example a short note on feedback buttons when training is turned off. |
 
 These are hypotheses to test with people, not validated guidelines.
@@ -99,6 +95,11 @@ These are hypotheses to test with people, not validated guidelines.
 - Only three assistants were reviewed and only in English.
 - "Not stated" means not stated on the pages I reviewed. A provider may explain it elsewhere.
 - The coding was done by one person, the author.
+
+## References
+
+1. Bourtoule, L., Chandrasekaran, V., Choquette-Choo, C. A., Jia, H., Travers, A., Zhang, B., Lie, D. & Papernot, N. (2021). Machine Unlearning. *IEEE Symposium on Security and Privacy*.
+2. Chen, M., Zhang, Z., Wang, T., Backes, M., Humbert, M. & Zhang, Y. (2021). When Machine Unlearning Jeopardizes Privacy. *ACM Conference on Computer and Communications Security (CCS)*.
 
 ## Sources (accessed 22 November 2026)
 
